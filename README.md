@@ -7,12 +7,15 @@ This module scrapes the publicly available NHL Api for game data given a specifi
 ## Setup
 
 To set up, run the following commands. Start by cloning this repo:
+
 `git clone https://github.com/jchemburkar/MarshmallowSqlAlchemyExample`
 
 Then, `cd` into the directory containing the cloned repo. From there, set up a virtual env:
+
 `virtualenv .env; . .env/bin/activate`
 
 This should create and activate your virtualenv. You should see `(.env)` at the left of your terminal command line. Now, we want to install relevant packages:
+
 `pip install -r requirements.txt` 
 
 Now our environment should be all set up to run the uploader!
@@ -22,9 +25,10 @@ Now our environment should be all set up to run the uploader!
 To run, call the following;
 
 `ENV=<env> PYTHONPATH=<path to repo> python upload_example.py --date <date>`
-	* ENV: takes in `local` or `docker`. Local will upload to local mysql db while docker while insert into local docker db
-	* PYTHONPATH: path to repo. Include the repo folder (`MarshmallowSqlAlchemyExample`)
-	* date: date of games to be uploaded. Takes YYYY-MM-DD format; e.g. `2019-02-07`
+
+* ENV: takes in `local` or `docker`. Local will upload to local mysql db while docker while insert into local docker db
+* PYTHONPATH: path to repo. Include the repo folder (`MarshmallowSqlAlchemyExample`)
+* date: date of games to be uploaded. Takes YYYY-MM-DD format; e.g. `2019-02-07`
 
 ## Data Overview
 
@@ -60,3 +64,13 @@ The rough structure of the raw data is as follows:
 		}
 	}
 ```
+
+We are parsing this into the following tables:
+
+| TABLE        | Stores                                                            |
+|--------------|-------------------------------------------------------------------|
+| shot_attempt | a row for every shot attempt, containing shooter, location, etc   |
+| goal         | a row for every goal, with similar information to what is in shot |
+| penalty      | a row for each penalty                                            |
+| hit          | a row for every hit recorded in a game                            |
+| faceoff      | a row for each faceoff in the game, including winner and loser    |
