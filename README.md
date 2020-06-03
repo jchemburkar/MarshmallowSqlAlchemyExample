@@ -38,6 +38,20 @@ The general structure of the uploader is as follows:
 3. data is transformed with the help of "parsed" marshmallow schemas. this enables us to deserialize and transform the raw data into the format we wish to store in the database. we often leverage certain features of these marshmallow schemas (context, pre/post dumps) to enrich the data in the process.
 4. data is loaded into the databse through sqlalchemy. in addition to helping specify and create our table structure, sqlalchemy helps us enforce relationships between different tables.
 
+In order to see out these steps, the module is structured as follows:
+
+* upload_example.py: main file combining all pieces of the uploader
+* extract.py: contains functions for pulling raw data from api
+* transform.py: contains functions for parsing through raw data, and transforming that into db-formatted rows
+* load.py: contains functions using SQLAlchemy to manage database operations
+* marshamllow_schemas/
+** raw_schemas: contains schemas that model the structure of a raw api response
+** parsed_schemas: contain schemas that perform deserialization of raw data into db format
+** schema_utils.py: helper schemas used in different places
+* models: contains files for SQLAlchemy models (one table per file)
+* utils.py: utility functions for extracting and logging
+* requirements.txt: contains packages needed in environment for this module to work
+
 ## Data Overview
 
 The rough structure of the raw data is as follows:
