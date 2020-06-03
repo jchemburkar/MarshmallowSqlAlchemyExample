@@ -46,9 +46,10 @@ In order to see out these steps, the module is structured as follows:
 * load.py: contains functions using SQLAlchemy to manage database operations
 * marshamllow_schemas/
 
-** raw_schemas: contains schemas that model the structure of a raw api response
-** parsed_schemas: contain schemas that perform deserialization of raw data into db format
-** schema_utils.py: helper schemas used in different places
+	* raw_schemas: contains schemas that model the structure of a raw api response
+	* parsed_schemas: contain schemas that perform deserialization of raw data into db format
+	* schema_utils.py: helper schemas used in different places
+
 * models: contains files for SQLAlchemy models (one table per file)
 * utils.py: utility functions for extracting and logging
 * requirements.txt: contains packages needed in environment for this module to work
