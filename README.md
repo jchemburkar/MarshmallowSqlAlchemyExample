@@ -24,11 +24,19 @@ Now our environment should be all set up to run the uploader!
 
 To run, call the following;
 
-`ENV=<env> PYTHONPATH=<path to repo> python upload_example.py --date <date>`
+`PYTHONPATH=<path to repo> python upload_example.py --date <date>`
 
-* ENV: takes in `local` or `docker`. Local will upload to local mysql db while docker while insert into local docker db
 * PYTHONPATH: path to repo. Include the repo folder (`MarshmallowSqlAlchemyExample`)
 * date: date of games to be uploaded. Takes YYYY-MM-DD format; e.g. `2019-02-07`
+
+## Workflow
+
+The general structure of the uploader is as follows:
+
+1. data is extracted from a raw api endpoint. data is recieved in a json format
+2. data is passed through a set of "raw" marshmallow schemas. These specify exactly how we expact the incoming data to look; any unexpected fields, or fields that are null/have an incorrrect datatype will throw an error. This step validates the incoming data during extraction
+3. data is transformed with the help of "parsed" marshmallow schemas. this enables us to deserialize and transform the raw data into the format we wish to store in the database. we often leverage certain features of these marshmallow schemas (context, pre/post dumps) to enrich the data in the process.
+4. data is loaded into the databse through sqlalchemy. in addition to helping specify and create our table structure, sqlalchemy helps us enforce relationships between different tables.
 
 ## Data Overview
 
@@ -71,6 +79,5 @@ We are parsing this into the following tables:
 |--------------|-------------------------------------------------------------------|
 | shot_attempt | a row for every shot attempt, containing shooter, location, etc   |
 | goal         | a row for every goal, with similar information to what is in shot |
-| penalty      | a row for each penalty                                            |
-| hit          | a row for every hit recorded in a game                            |
-| faceoff      | a row for each faceoff in the game, including winner and loser    |
+
+There are plenty of other things that can be parsed from this data (penalties, faceoffs, winners/losers, boxscores, linescores) but I wanted to keep this example limited in scope.
